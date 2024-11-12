@@ -3,6 +3,7 @@ import "./App.css";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Navbar from "./components/common/Navbar/Navbar";
 import InterviewInterface from "./pages/InterviewInterface/InterviewInterface";
+
 import WhiteboardContainer from "./components/Whiteboard/WhiteboardContainer";
 import CodeApp from "./components/CodeEditor/CodeApp";
 import UserDashboard from "./pages/Dashboard/UserDashBoard/UserDashboard";
@@ -16,6 +17,7 @@ import HRProfile from "./pages/Profile/HRProfile/HRProfile";
 import HRSignup from "./pages/SignUp/HRSignup/HRSignup";
 import HRSignIn from "./pages/SignIn/HRSignIn/HRSignIn";
 import PhoneAuth from "./components/PhoneAuthentication/PhoneAuthnetication";
+
 // import SocketComponent from './socket/SocketComponentTest';
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
           path="/interview/room/:roomID"
           element={<InterviewInterface room={true} />}
         />
+        <Route path="/whiteboard" element={<WhiteboardContainer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>

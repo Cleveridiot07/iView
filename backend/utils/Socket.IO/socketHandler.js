@@ -1,46 +1,42 @@
-const { Server } = require('socket.io');
+// // server.js
+// const express = require('express');
+// const http = require('http');
+// const { Server } = require('socket.io');
+// const cors = require('cors');
 
-const users = {}; // To store user socket IDs
+// const app = express();
+// const httpServer = http.createServer(app);
 
-module.exports = (server) => {
-    const io = new Server(server, {
-        cors: {
-            origin: "*",
-            methods: ["GET", "POST"]
-        }
-    });
+// app.use(cors({
+//   origin: 'http://localhost:5173' // Replace with your frontend's URL
+// }));
 
-    io.on('connection', (socket) => {
-        console.log('a user connected:', socket.id);
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: 'http://localhost:5173',
+//     methods: ['GET', 'POST']
+//   }
+// });
 
-        // Store the user's socket ID with their username
-        socket.on('register', (username) => {
-            users[username] = socket.id;
-            console.log(`User registered: ${username} with socket ID: ${socket.id}`);
-        });
+// io.on('connection', (socket) => {
+//   console.log(`${socket.id} connected`);
 
-        // Send a private message to a specific user
-        socket.on('private_message', ({ recipient, message }) => {
-            const recipientSocketId = users[recipient];
-            if (recipientSocketId) {
-                io.to(recipientSocketId).emit('private_message', {
-                    sender: socket.id,
-                    message: message
-                });
-            } else {
-                console.log(`User ${recipient} not found.`);
-            }
-        });
+//   socket.on('draw', (data) => {
+//     socket.broadcast.emit('draw', data);
+//   });
 
-        socket.on('disconnect', () => {
-            console.log('user disconnected:', socket.id);
-            // Remove user from the users object
-            for (let username in users) {
-                if (users[username] === socket.id) {
-                    delete users[username];
-                    break;
-                }
-            }
-        });
-    });
-};
+//   socket.on('down', (data) => {
+//     socket.broadcast.emit('down', data);
+//   });
+
+//   socket.on('circle', (data) => {
+//     socket.broadcast.emit('circle', data);
+//   });
+
+//   socket.on('disconnect', () => {
+//     console.log(`${socket.id} disconnected`);
+//   });
+// });
+
+// const PORT = process.env.PORT || 8080;
+// httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`));
