@@ -29,7 +29,7 @@ function MeetingView(props) {
         <div className="flex-1 overflow-y-auto px-6">
           <div className="flex flex-col justify-around h-full">
             {[...participants.keys()].map((participantId) => (
-              <div className="  rounded-lg px-2 w-full flex justify-center h-full">
+              <div key={participantId} className="  rounded-lg px-2 flex justify-center w-full h-full">
                 <ParticipantView
                   participantId={participantId}
                   key={participantId}

@@ -63,7 +63,7 @@ export default function MeetingPreview({ JoinMeeting }) {
   return (
     <div className="h-full bg-[#1E1E1E] flex items-center justify-center p-4">
       <div className="max-w-2xl w-full space-y-4">
-        <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800">
+        <div className="relative aspect-video rounded-lg overflow-hidden bg-[#2E2E2E]">
           {error ? (
             <div className="absolute inset-0 flex items-center justify-center text-red-500">
               {error}
@@ -84,7 +84,7 @@ export default function MeetingPreview({ JoinMeeting }) {
             <button
               onClick={toggleCamera}
               className={`${
-                !isCameraOn ? 'p-5 bg-red-500 text-white hover:bg-red-600' : 'p-5 bg-white rounded-sm'
+                !isCameraOn ? 'p-5 bg-red-500 text-white hover:bg-red-600 rounded-full' : 'p-5 bg-gray-500 rounded-full'
               }`}
             >
               {isCameraOn ? (
@@ -96,7 +96,7 @@ export default function MeetingPreview({ JoinMeeting }) {
             <button
               onClick={toggleMic}
               className={`${
-                !isMicOn ? 'p-5 bg-red-500 text-white hover:bg-red-600' : 'p-5 bg-white rounded-sm'
+                !isMicOn ? 'p-5 bg-red-500 text-white hover:bg-red-600 rounded-full' : 'p-5 bg-gray-500 rounded-full'
               }`}
             >
               {isMicOn ? (
@@ -109,7 +109,7 @@ export default function MeetingPreview({ JoinMeeting }) {
 
           <button
             onClick={handleJoinMeeting}
-            className="bg-primary p-2 hover:bg-primary/90"
+            className="bg-gray-200 text-gray-950 rounded-md hover:bg-gray-800 hover:text-gray-200 p-2"
           >
             Join Meeting
           </button>

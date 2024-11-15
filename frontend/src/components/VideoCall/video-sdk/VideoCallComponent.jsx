@@ -34,7 +34,9 @@ function VideoCallComponent() {
       </MeetingConsumer>
     </MeetingProvider>
   ) : (
+    <div className=" ">
     <JoinScreen getMeetingAndToken={getMeetingAndToken} />
+    </div>
   );
 }
 

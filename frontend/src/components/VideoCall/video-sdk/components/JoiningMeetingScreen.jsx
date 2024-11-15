@@ -31,8 +31,8 @@ export default function JoiningMeetingScreen() {
       </div>
       
       <div className="mt-8 w-full max-w-md">
-        <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div className="h-full bg-primary animate-pulse" style={{width: '100%'}}></div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-full bg-gay-200 animate-pulse" style={{width: '100%'}}></div>
         </div>
       </div>
       
