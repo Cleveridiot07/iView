@@ -18,6 +18,15 @@ const SampleReportWeb = () => {
     },
   ];
 
+  const [feedbacks, setFeedbacks] = useState([
+    { id: 1, text: "Great performance!", sentiment: "positive" },
+    {
+      id: 2,
+      text: "Needs improvement in time management.",
+      sentiment: "negative",
+    },
+  ]);
+
   const [skills, setSkills] = useState(initialSkills);
   const [isEditing, setIsEditing] = useState(true);
 
@@ -25,19 +34,79 @@ const SampleReportWeb = () => {
     setSkills(updatedSkills);
   };
 
+  const [questions, setQuestions] = useState([
+    {
+      id: '1',
+      number: 1,
+      text: 'Explain RESTful API architecture',
+      rating: 8,
+      remark: 'Good understanding of REST principles',
+      icon: 'Globe',
+    },
+    {
+      id: '2',
+      number: 2,
+      text: 'Describe the difference between SQL and NoSQL databases',
+      rating: 7,
+      remark: 'Solid grasp on database types',
+      icon: 'Database',
+    },
+    {
+      id: '3',
+      number: 3,
+      text: 'What are the benefits of using containerization?',
+      rating: 9,
+      remark: 'Excellent knowledge of Docker and containers',
+      icon: 'Cloud',
+    },
+  ]);
+
+  const handleAddQuestion = (newQuestion) => {
+    setQuestions((prevQuestions) => [
+      ...prevQuestions,
+      {
+        ...newQuestion,
+        id: Date.now().toString(),
+        number: prevQuestions.length + 1,
+      },
+    ]);
+  };
+
+  const handleEditQuestion = (id, updatedFields) => {
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((q) =>
+        q.id === id ? { ...q, ...updatedFields } : q
+      )
+    );
+  };
+
+  const handleDeleteQuestion = (id) => {
+    setQuestions((prevQuestions) =>
+      prevQuestions
+        .filter((q) => q.id !== id)
+        .map((q, index) => ({ ...q, number: index + 1 }))
+    );
+  };
+
+
   return (
     <div>
       <CustomProfileSection />
-      
+
       <CustomBasicSkiils
         skillsList={skills}
         isEditing={isEditing}
         onSaveSkills={handleSaveSkills}
       />
-      
+
       <CustomQuestions />
       <CustomFeedBack />
-      <CustomFooter />
+      <CustomFooter
+        feedbacksProp={feedbacks}
+        isEditing={isEditing}
+        onFeedbackChange={setFeedbacks}
+        onAddFeedback={setFeedbacks}
+      />
 
       <div className="mt-6 fixed bottom-5 right-5 text-center">
         <button

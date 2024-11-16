@@ -4,7 +4,7 @@ import { Pencil, Check, X } from 'lucide-react'
 export default function CustomProfileSection() {
   const [isEditing, setIsEditing] = useState(false)
   const [profile, setProfile] = useState({
-    name: 'John Doe',
+    name: 'Henry Beljiman',
     interviewDate: '2023-05-15',
     role: 'Junior Developer',
     company: 'Tech Corp',
@@ -74,8 +74,9 @@ export default function CustomProfileSection() {
                   className="text-sm border rounded px-2 py-1 focus:border-blue-500 outline-none"
                 />
               ) : (
-                <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-sm font-medium text-blue-700">
-                  {profile.role}
+                <span className="flex items-center rounded-full w-48  bg-blue-50 px-2.5 py-1.5 text-sm font-medium text-blue-700">
+                    <div className=""> {profile.role}</div>
+                 
                 </span>
               )}
             </div>
