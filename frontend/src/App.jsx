@@ -17,6 +17,8 @@ import HRSignup from "./pages/SignUp/HRSignup/HRSignup";
 import HRSignIn from "./pages/SignIn/HRSignIn/HRSignIn";
 import PhoneAuth from "./components/PhoneAuthentication/PhoneAuthnetication";
 import VideoCallComponent from "./components/VideoCall/video-sdk/VideoCallComponent";
+import SampleReport from "./components/ReportGenerator/SampleReport";
+import SampleReportWeb from "./components/ReportGenerator/SampleReportWeb";
 // import SocketComponent from './socket/SocketComponentTest';
 
 function App() {
@@ -43,6 +45,8 @@ function App() {
           path="/interview/room/test"
           element={<VideoCallComponent />}
         />
+        {/* Test Route */}
+        <Route path="/test" element={<SampleReportWeb />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
