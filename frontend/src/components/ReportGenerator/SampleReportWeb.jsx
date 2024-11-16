@@ -91,7 +91,7 @@ const SampleReportWeb = () => {
 
   return (
     <div>
-      <CustomProfileSection />
+      <CustomProfileSection Editing={isEditing} />
 
       <CustomBasicSkiils
         skillsList={skills}

@@ -25,17 +25,22 @@ const Output = ({ editorRef, language }) => {
 
   return (
     <div className="w-full  ">
-      <button
-        className={`px-4 mt-4 py-2 mb-4 text-white bg-green-600 rounded hover:bg-green-700 focus:outline-none ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
-        onClick={runCode}
-        disabled={isLoading}
-      >
-        {isLoading ? "Loading" : (<Play/>)}
-      </button>
+      <div className="w-full  flex justify-end pr-4">
+        <button
+          className={`px-4 mt-4 py-2 mb-4 text-white bg-green-600 rounded hover:bg-green-700 focus:outline-none ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={runCode}
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading" : <Play />}
+        </button>
+      </div>
       <div
-        className={`h-[50vh] pl-2 pt-2 w-full border rounded overflow-y-scroll  text-white bg-[#222222] ${isError ? "text-red-400 border-red-500" : "border-gray-950"}`}
+        className={`h-[50vh] pl-2 pt-2 w-full border rounded overflow-y-scroll  text-white bg-[#222222] ${
+          isError ? "text-red-400 border-red-500" : "border-gray-950"
+        }`}
       >
-
         {output
           ? output.map((line, i) => <p key={i}>&gt; {line}</p>)
           : 'Click "Run Code" to see the output here'}

@@ -34,7 +34,7 @@ function ParticipantView(props) {
 
   return (
     <div className="rounded-2xl flex flex-col items-center justify-center w-full ">
-      <div className="relative flex items-center justify-center w-full h-full bg-white rounded-lg overflow-hidden">
+      <div className="relative flex items-center justify-center w-full h-full  rounded-lg overflow-hidden">
         {webcamOn ? (
           <div className="rounded-lg overflow-hidden">
             <ReactPlayer

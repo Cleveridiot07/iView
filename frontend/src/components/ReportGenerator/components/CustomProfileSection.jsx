@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
-import { Pencil, Check, X } from 'lucide-react'
+import React, { useState } from "react";
+import { Pencil, Check, X } from "lucide-react";
 
-export default function CustomProfileSection() {
-  const [isEditing, setIsEditing] = useState(false)
-  const [profile, setProfile] = useState({
-    name: 'Henry Beljiman',
-    interviewDate: '2023-05-15',
-    role: 'Junior Developer',
-    company: 'Tech Corp',
-    description: 'Passionate about web development and new technologies.',
-  })
+export default function CustomProfileSection({
+  Editing = true,
+  userData = {
+    name: "Henry Beljiman",
+    interviewDate: "2023-05-15",
+    role: "Junior Developer",
+    company: "Tech Corp",
+    description: "Passionate about web development and new technologies.",
+  },
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState(userData);
 
-  const handleEdit = () => setIsEditing(true)
-  const handleCancel = () => setIsEditing(false)
-  const handleSave = () => setIsEditing(false)
+  const handleEdit = () => setIsEditing(true);
+  const handleCancel = () => setIsEditing(false);
+  const handleSave = () => setIsEditing(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setProfile(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-4">
@@ -27,7 +30,10 @@ export default function CustomProfileSection() {
           {/* Avatar */}
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
             <span className="text-xl font-semibold text-gray-600">
-              {profile.name.split(' ').map(n => n[0]).join('')}
+              {profile.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
             </span>
           </div>
 
@@ -44,10 +50,12 @@ export default function CustomProfileSection() {
                     className="text-2xl font-bold text-gray-900 w-full border-b border-gray-300 focus:border-blue-500 outline-none"
                   />
                 ) : (
-                  <h2 className="text-2xl font-bold text-gray-900">{profile.name}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {profile.name}
+                  </h2>
                 )}
                 <p className="text-sm text-gray-600 mt-1">
-                  Interviewed on: {' '}
+                  Interviewed on:{" "}
                   {isEditing ? (
                     <input
                       type="date"
@@ -58,12 +66,15 @@ export default function CustomProfileSection() {
                     />
                   ) : (
                     <time dateTime={profile.interviewDate}>
-                      {new Date(profile.interviewDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      {new Date(profile.interviewDate).toLocaleDateString(
+                        "en-US",
+                        { year: "numeric", month: "long", day: "numeric" }
+                      )}
                     </time>
                   )}
                 </p>
               </div>
-              
+
               {/* Role Badge */}
               {isEditing ? (
                 <input
@@ -75,8 +86,7 @@ export default function CustomProfileSection() {
                 />
               ) : (
                 <span className="flex items-center rounded-full w-48  bg-blue-50 px-2.5 py-1.5 text-sm font-medium text-blue-700">
-                    <div className=""> {profile.role}</div>
-                 
+                  <div className=""> {profile.role}</div>
                 </span>
               )}
             </div>
@@ -131,17 +141,21 @@ export default function CustomProfileSection() {
                 </button>
               </>
             ) : (
-              <button
-                onClick={handleEdit}
-                className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                <Pencil className="w-4 h-4 mr-1" />
-                Edit
-              </button>
+              <div className="">
+                {Editing && (
+                  <button
+                    onClick={handleEdit}
+                    className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    <Pencil className="w-4 h-4 mr-1" />
+                    Edit
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
