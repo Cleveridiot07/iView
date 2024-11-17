@@ -18,6 +18,58 @@ const SampleReportWeb = () => {
     },
   ];
 
+  const userData = {
+    name: "Henry Beljiman",
+    interviewDate: "2023-05-15",
+    role: "Junior Developer",
+    company: "Tech Corp",
+    description: "Passionate about web development and new technologies.",
+  };
+
+  const questionList = [
+    {
+      id: "1",
+      number: 1,
+      text: "Explain RESTful API architecture",
+      rating: 8,
+      remark: "Good understanding of REST principles",
+      icon: "Globe",
+    },
+    {
+      id: "2",
+      number: 2,
+      text: "Describe the difference between SQL and NoSQL databases",
+      rating: 7,
+      remark: "Solid grasp on database types",
+      icon: "Database",
+    },
+    {
+      id: "3",
+      number: 3,
+      text: "What are the benefits of using containerization?",
+      rating: 9,
+      remark: "Excellent knowledge of Docker and containers",
+      icon: "Cloud",
+    },
+  ];
+
+  const sectionData = {
+    strengths: [
+      "Strong problem-solving abilities",
+      "Excellent communication skills",
+      "Deep knowledge of React ecosystem",
+    ],
+    weaknesses: [
+      "Limited experience with backend technologies",
+      "Need improvement in system design",
+    ],
+    improvements: [
+      "Focus on learning Node.js and Express",
+      "Practice more system design problems",
+      "Contribute to open source projects",
+    ],
+  };
+
   const [feedbacks, setFeedbacks] = useState([
     { id: 1, text: "Great performance!", sentiment: "positive" },
     {
@@ -34,64 +86,9 @@ const SampleReportWeb = () => {
     setSkills(updatedSkills);
   };
 
-  const [questions, setQuestions] = useState([
-    {
-      id: '1',
-      number: 1,
-      text: 'Explain RESTful API architecture',
-      rating: 8,
-      remark: 'Good understanding of REST principles',
-      icon: 'Globe',
-    },
-    {
-      id: '2',
-      number: 2,
-      text: 'Describe the difference between SQL and NoSQL databases',
-      rating: 7,
-      remark: 'Solid grasp on database types',
-      icon: 'Database',
-    },
-    {
-      id: '3',
-      number: 3,
-      text: 'What are the benefits of using containerization?',
-      rating: 9,
-      remark: 'Excellent knowledge of Docker and containers',
-      icon: 'Cloud',
-    },
-  ]);
-
-  const handleAddQuestion = (newQuestion) => {
-    setQuestions((prevQuestions) => [
-      ...prevQuestions,
-      {
-        ...newQuestion,
-        id: Date.now().toString(),
-        number: prevQuestions.length + 1,
-      },
-    ]);
-  };
-
-  const handleEditQuestion = (id, updatedFields) => {
-    setQuestions((prevQuestions) =>
-      prevQuestions.map((q) =>
-        q.id === id ? { ...q, ...updatedFields } : q
-      )
-    );
-  };
-
-  const handleDeleteQuestion = (id) => {
-    setQuestions((prevQuestions) =>
-      prevQuestions
-        .filter((q) => q.id !== id)
-        .map((q, index) => ({ ...q, number: index + 1 }))
-    );
-  };
-
-
   return (
-    <div>
-      <CustomProfileSection Editing={isEditing} />
+    <div className="max-h-screen overflow-auto">
+      <CustomProfileSection Editing={isEditing} userData={userData} />
 
       <CustomBasicSkiils
         skillsList={skills}
@@ -99,8 +96,8 @@ const SampleReportWeb = () => {
         onSaveSkills={handleSaveSkills}
       />
 
-      <CustomQuestions />
-      <CustomFeedBack />
+      <CustomQuestions isEditing={isEditing} questionList={questionList} />
+      <CustomFeedBack isEditing={isEditing} sectionData={sectionData} />
       <CustomFooter
         feedbacksProp={feedbacks}
         isEditing={isEditing}

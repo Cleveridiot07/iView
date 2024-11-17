@@ -122,7 +122,7 @@ export default function CustomBasicSkills({
                 )}
               </div>
               <div className="flex items-center gap-4">
-                <div className="text-2xl font-bold">
+                <div className="text-2xl flex font-bold">
                   {editingId === skill.id ? (
                     <input
                       type="number"
@@ -135,9 +135,10 @@ export default function CustomBasicSkills({
                       max="10"
                     />
                   ) : (
-                    skill.rating
+                    <div className="text-gray-600">{ skill.rating}</div>
+                   
                   )}
-                  <span className="text-gray-600">/10</span>
+                  <span className="text-gray-700">/10</span>
                 </div>
                 <div className="flex-1 bg-gray-200 rounded-full h-4">
                   <div

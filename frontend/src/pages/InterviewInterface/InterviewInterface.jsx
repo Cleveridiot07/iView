@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import VideoCallComponent from "../../components/VideoCall/video-sdk/VideoCallComponent";
 import { PencilLine, Code } from "lucide-react";
+import SampleReportWeb from "../../components/ReportGenerator/SampleReportWeb";
+import { FileCheck2, X } from "lucide-react";
 
 const InterviewInterface = ({ room }) => {
+  const [ReportGenertorOpen, setReportGenertorOpen] = useState(true);
   const [toggle, setToggle] = useState(true);
 
   const handleOpenWhiteBoard = () => {
@@ -12,6 +15,10 @@ const InterviewInterface = ({ room }) => {
 
   const handleOpenCodeEditor = () => {
     setToggle(true);
+  };
+
+  const handleOpenReportGenerator = () => {
+    setReportGenertorOpen(!ReportGenertorOpen);
   };
 
   return (
@@ -56,6 +63,21 @@ const InterviewInterface = ({ room }) => {
           <VideoCallComponent />
         </div>
       </div>
+      <div
+        onClick={handleOpenReportGenerator}
+        className={`fixed cursor-pointer text-white rounded-lg top-5 z-50 p-3 right-5 ${
+          ReportGenertorOpen ? "bg-red-500" : "bg-blue-500"
+        }`}
+      >
+        {ReportGenertorOpen ? <X /> : <FileCheck2 />}
+      </div>
+      {ReportGenertorOpen && (
+        <div className="w-screen bg-black bg-opacity-65 fixed z-40 overflow-auto">
+          <div className="max-w-4xl">
+            <SampleReportWeb />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -35,7 +35,7 @@ export default function CustomFooter({
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg">
+    <div className="max-w-6xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
         <MessageCircle className="w-8 h-8 mr-2 text-blue-500" />
         Feedback
