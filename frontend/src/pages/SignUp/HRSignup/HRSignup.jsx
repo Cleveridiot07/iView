@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { registerHR } from '../../../api/HR/HRAPI'; // Adjust the path according to your project structure
+import { registerHR } from '../../../api/HR/hr.api'; // Adjust the path according to your project structure
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
 import SuccessNotification from '../../../components/Notification/SuccessNotification/SuccessNotification';
 

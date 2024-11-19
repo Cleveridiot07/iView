@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../../api/users/userAPI';
+import { loginUser } from '../../../api/Users/user.api';
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
 import SuccessNotification from '../../../components/Notification/SuccessNotification/SuccessNotification';
 import Cookies from 'js-cookie';

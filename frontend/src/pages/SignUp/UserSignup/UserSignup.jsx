@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import OTPBox from '../../../components/OTPBox/OTPBox';
 import { signInWithPhoneNumber } from 'firebase/auth';
-import { registerUser } from '../../../api/users/userAPI';
+import { registerUser } from '../../../api/Users/user.api';
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
 import SuccessNotification from '../../../components/Notification/SuccessNotification/SuccessNotification';
 import {useNavigate} from "react-router-dom";

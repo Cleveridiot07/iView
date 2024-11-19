@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchHR } from "../../../api/HR/HRAPI";
+import { fetchHR } from "../../../api/HR/hr.api"
 import InterviewListHR from "../../../components/HRInterviewList/InterviewListHR";
 import ErrorNotification from "../../../components/Notification/ErrorNotification/ErrorNotification";
 

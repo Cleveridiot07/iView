@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { updateUser, getUser } from '../../api/users/userAPI';
+import { updateUser, getUser } from '../../api/Users/user.api';
 import ErrorNotification from '../../components/Notification/ErrorNotification/ErrorNotification';
 import SuccessNotification from '../../components/Notification/SuccessNotification/SuccessNotification';
 import { useNavigate } from 'react-router-dom';

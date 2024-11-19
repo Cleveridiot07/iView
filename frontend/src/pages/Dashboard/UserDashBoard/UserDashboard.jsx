@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import InterviewList from '../../../components/InterviewList/InterviewList';
-import { getUser } from '../../../api/users/userAPI';
+import { getUser } from '../../../api/Users/user.api';
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
-import { getInterviewsByEmail } from '../../../api/interview/interview.api';
+import { getInterviewsByEmail } from '../../../api/Interview/interview.api';
 import { useNavigate } from 'react-router-dom';
 
 const UserDashboard = () => {

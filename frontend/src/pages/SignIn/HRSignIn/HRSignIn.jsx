@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginHR } from '../../../api/HR/HRAPI'; // Adjust the path according to your project structure
+import { loginHR } from '../../../api/HR/hr.api'; // Adjust the path according to your project structure
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
 import SuccessNotification from '../../../components/Notification/SuccessNotification/SuccessNotification';
 import Cookies from 'js-cookie';

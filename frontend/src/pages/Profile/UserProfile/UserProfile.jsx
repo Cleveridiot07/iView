@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getUser } from '../../../api/users/userAPI';
+import { getUser } from '../../../api/Users/user.api';
 import { useNavigate } from 'react-router-dom';
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
 import UpdateProfile from '../../../components/UpdateProfile/UpdateProfile';

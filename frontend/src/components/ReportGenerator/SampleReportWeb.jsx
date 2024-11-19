@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomBasicSkiils from "./components/CustomBasicSkills";
 import CustomProfileSection from "./components/CustomProfileSection";
 import CustomQuestions from "./components/CustomQuestions";
 import CustomFeedBack from "./components/CustomFeedBack";
 import CustomFooter from "./components/CustomFooter";
+import { fetchGeminiResponse } from "../../api/Gemini/gemini.api";
 
 const SampleReportWeb = () => {
+  useEffect(() => {
+    const fetchGemini = async()=>{
+      try {
+        const data= fetchGeminiResponse("SDE", "Google", "Fresher");
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchGemini();
+  }, []);
+
   const initialSkills = [
     { id: "1", name: "Basic Technical Knowledge", rating: 8, icon: "Code" },
     { id: "2", name: "Problem-Solving Skills", rating: 7, icon: "Puzzle" },
