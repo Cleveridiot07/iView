@@ -1,5 +1,5 @@
 
-```markdown
+
 # AI-Powered Interview Collaboration Platform
 
 This repository contains both the frontend and backend code for an AI-powered interview collaboration platform. The platform facilitates seamless collaboration between HR managers and candidates, enabling scheduling, real-time video interviews, collaborative tools, and AI-powered report generation.
