@@ -4,9 +4,10 @@ import VideoCallComponent from "../../components/VideoCall/video-sdk/VideoCallCo
 import { PencilLine, Code } from "lucide-react";
 import SampleReportWeb from "../../components/ReportGenerator/SampleReportWeb";
 import { FileCheck2, X } from "lucide-react";
+import StreamVideoCall from "../../components/VideoCall/Stream";
 
 const InterviewInterface = ({ room }) => {
-  const [ReportGenertorOpen, setReportGenertorOpen] = useState(true);
+  const [ReportGenertorOpen, setReportGenertorOpen] = useState(false);
   const [toggle, setToggle] = useState(true);
 
   const handleOpenWhiteBoard = () => {
@@ -61,6 +62,7 @@ const InterviewInterface = ({ room }) => {
       <div className="bg-[#1e1e1e] flex justify-center items-center p-6 md:h-full h-screen  overflow-y-auto row-span-1  md:row-auto md:col-span-1 md:order-none order-1">
         <div className="h-full w-full max-h-full max-w-full rounded-lg overflow-auto shadow-md flex items-center justify-center p-4 bg-[#2a2a2a]">
           <VideoCallComponent />
+          {/* <StreamVideoCall/> */}
         </div>
       </div>
       <div

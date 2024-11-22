@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
-import { getInterviewsByHRId } from '../../api/interview/interview.api';
+import { getInterviewsByHRId } from '../../api/Interview/interview.api';
 import { useNavigate } from 'react-router-dom';
 
 
