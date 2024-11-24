@@ -42,6 +42,10 @@ function App() {
           element={<InterviewInterface room={true} />}
         />
         <Route
+          path="/hr/interview/room/"
+          element={<InterviewInterface room={true} />}
+        />
+        <Route
           path="/interview/room/test"
           element={<VideoCallComponent />}
         />

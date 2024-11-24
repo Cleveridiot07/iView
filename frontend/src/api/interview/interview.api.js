@@ -42,3 +42,55 @@ export const getInterviewsByHRId = async () => {
   });
   return response.data;
 };
+
+// Get interview by interview ID
+export const getInterviewById = async (interviewId) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/meeting`,  // API URL for your POST endpoint
+      {
+        interviewID: interviewId,  // Send the interview ID in the JSON body
+        Test: "test",               // Optional additional data
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        withCredentials: true, 
+      }
+    );
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching interview by ID:", error);
+    throw error;  // Rethrow error if necessary
+  }
+};
+
+
+export const startInterview = async({interviewID,meetingID})=>{
+    try {
+      const response = await axios.post(
+        `${API_URL}/startinterview`,
+        {
+          interviewID,
+          meetingID
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+          withCredentials: true, 
+        }
+        
+      );
+      return response.data; 
+    } catch (error) {
+      console.error("Error Starting Interview", error);
+      throw error;  
+    }
+}
+
+
+
+
+

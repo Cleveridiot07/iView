@@ -7,7 +7,9 @@ const {
   editInterview,
   deleteInterview,
   getInterviewsByEmail,
-  getInterviewsByHRId
+  getInterviewsByHRId,
+  getInterviewByInterviewID,
+  startInterview
 } = require('../controllers/interview.controller');
 
 // Create Interview
@@ -24,5 +26,11 @@ router.get('/email', userAuth, getInterviewsByEmail);
 
 // Get Interviews by HR ID
 router.get('/hr', hrAuth, getInterviewsByHRId);
+
+// Get Interview by Interview ID
+router.post('/meeting',getInterviewByInterviewID);
+
+// Start Interview by HR
+router.post('/startinterview',hrAuth,startInterview);
 
 module.exports = router;

@@ -101,7 +101,7 @@ const getInterviewsByEmail = async (req, res) => {
 
 // Get Interviews by HR ID
 const getInterviewsByHRId = async (req, res) => {
-  console.log(req.data);
+  // console.log(req.data);
   try {
     const interviews = await Interview.find({ interviewier: req.hr._id });
 
@@ -116,10 +116,80 @@ const getInterviewsByHRId = async (req, res) => {
   }
 };
 
+const getInterviewByInterviewID = async (req, res) => {
+
+  try {
+    const { interviewID } = req.body;  // Extract interviewID from the request body
+
+    // Use findOne to fetch the interview by ID
+    const interview = await Interview.findOne({ _id: interviewID });
+
+    if (!interview) {
+      return res.status(404).json({ message: 'Interview not found' });
+    }
+
+    console.log('Interview fetched by ID:', interview);
+    res.status(200).json(interview);
+  } catch (error) {
+    console.error('Error getting interview by ID:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
+
+// Start Interview
+const startInterview = async (req, res) => {
+  // console.log(req.body);
+  try {
+    const { interviewId, meetingId } = req.body;
+    // console.log("TEST",interviewId);
+
+    // // Validate the ObjectId
+    // if (!mongoose.Types.ObjectId.isValid(interviewId)) {
+    //   return res.status(400).json({ message: 'Invalid interview ID' });
+    // }
+
+    // Ensure meeting ID is provided
+    if (!meetingId) {
+      return res.status(400).json({ message: 'Please provide a valid meeting ID' });
+    }
+
+    // Find the interview by ID
+    const interview = await Interview.findById(interviewId);
+
+    // Check if the interview exists
+    if (!interview) {
+      return res.status(404).json({ message: 'Interview not found' });
+    }
+
+    // Ensure the HR is authorized to start the interview (matches HR ID)
+    if (!interview.interviewier.equals(req.hr._id)) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Update the interview with the meeting ID
+    interview.meetingId = meetingId;
+    interview.status = 'Ongoing';  // Optional: Update status to 'In Progress' or any other status
+
+    // Save the updated interview
+    await interview.save();
+
+    res.status(200).json({ message: 'Interview started successfully', interview });
+  } catch (err) {
+    console.error('Error starting interview:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 module.exports = {
   createInterview,
   editInterview,
   deleteInterview,
   getInterviewsByEmail,
-  getInterviewsByHRId
+  getInterviewsByHRId,
+  getInterviewByInterviewID,
+  startInterview,
 };

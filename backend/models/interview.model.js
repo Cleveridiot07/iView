@@ -13,11 +13,11 @@ const interviewSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['Completed', 'Missed', 'Upcoming'],
+    enum: ['Completed', 'Missed', 'Upcoming','Ongoing'],
     required: true
   },
-  position:{
-    type:String,
+  position: {
+    type: String,
     required: true,
   },
   reportPDF: {
@@ -27,9 +27,13 @@ const interviewSchema = new Schema({
     type: Date,
     required: true
   },
-  time:{
+  time: {
     type: String,
     required: true
+  },
+  meetingId: {
+    type: String,
+    default: null  
   },
   createdAt: {
     type: Date,

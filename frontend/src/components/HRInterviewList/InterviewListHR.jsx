@@ -18,7 +18,7 @@ export default function InterviewListHR() {
   }, []);
 
   const handleStartInterview = (id) => {
-    navigate(`/interview/room/${id}`);
+    navigate(`/hr/interview/room/?interviewID=${id}`);
   };
 
   const handleDownloadReport = (id) => {
