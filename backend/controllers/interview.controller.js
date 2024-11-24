@@ -141,9 +141,9 @@ const getInterviewByInterviewID = async (req, res) => {
 
 // Start Interview
 const startInterview = async (req, res) => {
-  // console.log(req.body);
   try {
     const { interviewId, meetingId } = req.body;
+    console.log(interviewId);
     // console.log("TEST",interviewId);
 
     // // Validate the ObjectId

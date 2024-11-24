@@ -72,8 +72,8 @@ export const startInterview = async({interviewID,meetingID})=>{
       const response = await axios.post(
         `${API_URL}/startinterview`,
         {
-          interviewID,
-          meetingID
+          interviewId :interviewID,
+          meetingId :meetingID
         },
         {
           headers: {
