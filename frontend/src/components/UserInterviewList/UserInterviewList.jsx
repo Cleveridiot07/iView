@@ -1,43 +1,35 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { getInterviewsByHRId } from '../../api/Interview/interview.api';
-import { useNavigate } from 'react-router-dom';
+import { getInterviewsByEmail } from '../../api/Interview/interview.api';
 import { Calendar, User, ChevronRight } from 'lucide-react';
 
-export default function InterviewListHR() {
+export function UserInterviewList() {
   const [activeTab, setActiveTab] = useState('Upcoming');
-  const [interviewList, setInterviewList] = useState([]);
-  const navigate = useNavigate();
+  const [interviews, setInterviews] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchInterviews = async () => {
-      const data = await getInterviewsByHRId();
-      setInterviewList(data);
+      try {
+        const data = await getInterviewsByEmail();
+        if (data.message === 'No interview found') {
+          setErrorMessage('No interviews found');
+        } else {
+          setInterviews(data);
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          setErrorMessage('No interviews found');
+        } else {
+          setErrorMessage('An error occurred while fetching interviews');
+        }
+      }
     };
     fetchInterviews();
   }, []);
 
-  const handleStartInterview = (id) => {
-    navigate(`/interview/room/${id}`);
-  };
-
-  const handleDownloadReport = (id) => {
-    // Placeholder for download report logic
-    console.log(`Download report for interview ID: ${id}`);
-  };
-
-  const isToday = (dateStr) => {
-    const today = new Date();
-    const interviewDate = new Date(dateStr);
-    return (
-      interviewDate.getDate() === today.getDate() &&
-      interviewDate.getMonth() === today.getMonth() &&
-      interviewDate.getFullYear() === today.getFullYear()
-    );
-  };
-
-  const filteredInterviews = interviewList
-    ? interviewList.filter((interview) => interview.status === activeTab)
+  const filteredInterviews = interviews
+    ? interviews.filter((interview) => interview.status === activeTab)
     : [];
 
   return (
@@ -70,9 +62,7 @@ export default function InterviewListHR() {
               <div className="flex items-start sm:items-center gap-4 sm:gap-6 w-full">
                 <User className="w-8 h-8 text-gray-400 shrink-0" />
                 <div className="flex-1">
-                  <div className="text-gray-500 text-sm truncate">
-                    {interview.intervieweeEmail}
-                  </div>
+                  <div className="text-gray-500 text-sm truncate">{interview.email}</div>
                   <div className="font-semibold text-lg truncate">{interview.position}</div>
                   <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
                     <Calendar className="w-4 h-4 shrink-0" />
@@ -88,22 +78,6 @@ export default function InterviewListHR() {
                 <button className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
                   View Resume
                 </button>
-                {interview.status === 'Completed' ? (
-                  <button
-                    onClick={() => handleDownloadReport(interview._id)}
-                    className="bg-[#2B579A] hover:bg-[#1E3F7D] text-white px-3 py-2 rounded-sm text-sm transition-colors"
-                  >
-                    Download Report
-                  </button>
-                ) : (
-                  <button
-                    disabled={!isToday(interview.date)}
-                    onClick={() => handleStartInterview(interview._id)}
-                    className="bg-[#2B579A] hover:bg-[#1E3F7D] text-white px-3 py-2 rounded-sm text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Start Interview
-                  </button>
-                )}
                 <button className="flex items-center gap-1 text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
                   {interview.status}
                   <ChevronRight className="w-4 h-4" />

@@ -1,105 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import InterviewList from '../../../components/InterviewList/InterviewList';
+import { UserInterviewList } from '../../../components/UserInterviewList/UserInterviewList';
 import { getUser } from '../../../api/Users/user.api';
 import ErrorNotification from '../../../components/Notification/ErrorNotification/ErrorNotification';
-import { getInterviewsByEmail } from '../../../api/Interview/interview.api';
 import { useNavigate } from 'react-router-dom';
+import { Mail, Hash, Menu } from 'lucide-react';
 
 const UserDashboard = () => {
   const [image, setImage] = useState("./user2.png");
   const [username, setUsername] = useState("User");
   const [email, setEmail] = useState("email");
-  const [interviewList, setInterviewList] = useState([]);
+  const [phonenumber, setPhoneNumber] = useState("123456");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true); // Loading state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const fetchUserData = async () => {
-    try {
-      const response = await getUser();
-      setImage(response.data.profilePicture);
-      setUsername(response.data.username);
-      setEmail(response.data.email);
-    } catch (error) {
-      setError("Unauthorized");
-
-      console.error("Error fetching user data:", error);
-      setTimeout(()=>{
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await getUser();
+        setImage(response.data.profilePicture);
+        setUsername(response.data.username);
+        setEmail(response.data.email);
+        setPhoneNumber(response.data.phoneNumber);
+      } catch (error) {
+        setError("Unauthorized");
+        console.error("Error fetching user data:", error);
+        setTimeout(() => {
           navigate("/user/signin");
-      },2000);
-    }
-  };
-
-  const fetchInterviewList = async () => {
-    try {
-      const response = await getInterviewsByEmail();
-      const selectedInterviews = response.map(({ position, date, intervieweeEmail, interviewier, status, time }) => ({
-        position,
-        date: new Date(date).toISOString().split('T')[0], // "2001-07-14"
-        time: time, // Use the original time field directly
-        candidateName: interviewier.hrManager.name, // Assuming candidateName should be the interviewee email
-        companyName: interviewier.companyName, // Assuming companyName should be the interviewer ID
-        status,
-        report : "Pending",
-      }));
-  
-      // Log selected interviews to confirm they are correctly mapped
-      // console.log("Selected Interviews:", selectedInterviews);
-  
-      // Set the mapped interviews in state
-      setInterviewList(selectedInterviews);
-
-
-      // console.log("interview List: ",interviewList);
-    } catch (error) {
-      console.log("Error fetching interviews:", error);
-    } finally {
-      setLoading(false); // Set loading to false after fetching
-    }
-  };
-
-  useEffect(() => {
+        }, 2000);
+      }
+    };
     fetchUserData();
-    fetchInterviewList();
-  }, []);
+  }, [navigate]);
 
-  useEffect(() => {
-    // console.log("Updated Interview List:", interviewList); // This will log the updated list whenever it changes
-  }, [interviewList]);
+  // Toggle Sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
       {error && <ErrorNotification message={error} />}
-      <div className="flex flex-col w-full bg-background min-h-screen bg-muted/40">
-        <div className="flex flex-col w-full min-h-screen bg-muted/40">
-          <main className="flex flex-1 flex-col lg:flex-row justify-center gap-4 p-4 md:gap-8 md:p-10">
-            
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 justify-center md:flex md:flex-row md:justify-center">
-              <div className="rounded-sm border bg-card text-card shadow-sm flex flex-col items-center justify-center" data-v0-t="card">
-                <div className="space-y-1.5 flex flex-col items-center justify-center gap-2 p-6">
-                  <span className="relative flex shrink-0 overflow-hidden rounded-sm h-16 w-16">
-                    <img className="aspect-square h-full w-full" src={`${image}`} alt="User" />
-                  </span>
-                  <div className="text-center">
-                    <div className="text-lg text-[#222222] font-semibold">{username}</div>
-                    <div className="text-sm text-muted">{email}</div>
-                  </div>
-                </div>
-                <div className="items-center flex justify-center gap-2 p-4">
-                  <button onClick={()=>{navigate("/user/profile")}} className="inline-flex text-primary items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-primary hover:bg-accent hover:text-accent h-9 rounded-sm px-3">
-                    View Profile
-                  </button>
-                  <button className="inline-flex text-primary items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-primary hover:bg-accent hover:text-accent h-9 rounded-sm px-3">
-                    Change Password
-                  </button>
-                </div>
+      <div className="flex min-h-screen max-h-screen bg-[#0B1D39]">
+        
+        {/* Sidebar for larger screens & slide-in for small screens */}
+        <aside
+          className={`fixed inset-y-0 left-0 w-72 bg-white/10 p-6 backdrop-blur-sm flex flex-col transform ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform md:relative md:translate-x-0 z-20`}
+        >
+          <div className="flex-1">
+            <div className="flex flex-col items-center text-white">
+              <div className="relative w-48 h-48 mb-4">
+                <img
+                  src={image || "/placeholder.svg?height=192&width=192"}
+                  alt="User Profile"
+                  className="rounded-sm object-cover w-full h-full"
+                />
               </div>
+              <h2 className="text-xl font-semibold mb-1">{username || "User"}</h2>
+              <div className="flex items-center gap-2 text-sm text-gray-300 mb-1">
+                <Mail className="w-4 h-4" />
+                <span>{email || "user@mail.com"}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
+                <Hash className="w-4 h-4" />
+                <span>{phonenumber || "123456"}</span>
+              </div>
+              <button
+                onClick={() => { navigate("/user/profile"); }}
+                className="w-full bg-[#2B579A] hover:bg-[#1E3F7D] text-white py-2 rounded-sm transition-colors"
+              >
+                View Profile
+              </button>
             </div>
+          </div>
+          <button
+            className="w-full bg-[#2B579A] hover:bg-[#1E3F7D] text-white py-2 rounded-sm transition-colors"
+          >
+            Change Password
+          </button>
+        </aside>
 
-              <InterviewList interviewList={interviewList} />
+        {/* Overlay for small screen when sidebar is open */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black opacity-50 z-10 md:hidden"
+            onClick={toggleSidebar}
+          ></div>
+        )}
 
-          </main>
-        </div>
+        {/* Main Content */}
+        <main className="flex-1 p-8 overflow-auto">
+          {/* Toggle Button for small screens */}
+          <div className="md:hidden mb-4">
+            <button
+              onClick={toggleSidebar}
+              className="bg-[#2B579A] hover:bg-[#1E3F7D] text-white py-2 px-4 rounded-sm flex items-center gap-2"
+            >
+              <Menu className="w-5 h-5" />
+              Menu
+            </button>
+          </div>
+
+          <h1 className="text-4xl font-bold text-white mb-8">Interviews</h1>
+          <UserInterviewList />
+        </main>
       </div>
     </>
   );

@@ -9,7 +9,7 @@ function JoinScreen({ getMeetingAndToken, userType = "user" }) {
   };
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex max-w-2xl flex-col justify-center">
       {userType === "interviewee" ? (
         <div className="">
           <input
@@ -33,10 +33,10 @@ function JoinScreen({ getMeetingAndToken, userType = "user" }) {
             Start Meeting
           </button>
 
-          <div className="p w-full text-center">OR</div>
-          <button className="bg-gray-200 text-gray-900 p-5 rounded-md" onClick={onClick}>
+          {/* <div className="p w-full text-center">OR</div> */}
+          {/* <button className="bg-gray-200 text-gray-900 p-5 rounded-md" onClick={onClick}>
             Create Meeting
-          </button>
+          </button> */}
         </div>
       )}
     </div>

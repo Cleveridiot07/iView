@@ -41,12 +41,11 @@ const UserSignIn = () => {
     
 
     return (
-        <div>
+        <div className='md:h-screen md:max-h-screen md:overflow-hidden overflow-auto'>
             {error && <ErrorNotification message={error} />}
             {notification && <SuccessNotification message={notification} />}
-            <section className="bg-background w-full h-full">
-            <p className='text-center text-primary pt-10 text-5xl'>Login As User</p>
-                <div className="container bg-background h-full flex items-center justify-center mx-auto px-6 py-24">
+            <section className="bg-background w-full h-full py-5">
+                <div className="container bg-background h-full flex items-center justify-center mx-auto px-6">
                 
                     <div className="flex flex-wrap w-full lg:w-10/12 items-center justify-around lg:justify-between">
                         {/* Left column container with background */}

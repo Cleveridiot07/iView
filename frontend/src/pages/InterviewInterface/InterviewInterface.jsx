@@ -65,14 +65,14 @@ const InterviewInterface = ({ room }) => {
           {/* <StreamVideoCall/> */}
         </div>
       </div>
-      <div
+      {/* <div
         onClick={handleOpenReportGenerator}
         className={`fixed cursor-pointer text-white rounded-lg top-5 z-50 p-3 right-5 ${
           ReportGenertorOpen ? "bg-red-500" : "bg-blue-500"
         }`}
       >
         {ReportGenertorOpen ? <X /> : <FileCheck2 />}
-      </div>
+      </div> */}
       {ReportGenertorOpen && (
         <div className="w-screen bg-black bg-opacity-65 fixed z-40 overflow-auto">
           <div className="max-w-4xl">

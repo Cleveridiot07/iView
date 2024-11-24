@@ -37,12 +37,12 @@ const HRSignIn = () => {
     };
 
     return (
-        <div>
+        <div className='md:h-screen md:max-h-screen md:overflow-hidden overflow-auto'>
             {error && <ErrorNotification message={error} />}
             {notification && <SuccessNotification message={notification} />}
-            <section className="bg-background w-full h-full">
-            <p className='text-center text-primary pt-10 text-2xl'>Login As Interviewer</p>
-                <div className="container h-full flex items-center justify-center mx-auto px-6 py-24">
+            <section className="bg-background w-full h-full  py-5">
+            {/* <p className='text-center text-primary pt-10 text-2xl'>Login As Interviewer</p> */}
+                <div className="container h-full flex items-center justify-center mx-auto px-6 ">
                     <div className="flex flex-wrap w-full lg:w-10/12 items-center justify-around lg:justify-between">
                         {/* Left column container with background */}
                         <div className="mb-12 md:mb-0 w-full md:w-8/12 lg:w-6/12 flex justify-center">
