@@ -38,17 +38,17 @@ function App() {
         <Route path="/hr/dashboard" element={<HRDashboard />} />
         <Route path="/hr/profile" element={<HRProfile />} />
         <Route
-          path="/interview/room/:roomID"
+          path="/user/interview/room/"
           element={<InterviewInterface room={true} />}
         />
         <Route
           path="/hr/interview/room/"
           element={<InterviewInterface room={true} />}
         />
-        <Route
+        {/* <Route
           path="/interview/room/test"
           element={<VideoCallComponent />}
-        />
+        /> */}
         {/* Test Route */}
         <Route path="/test" element={<SampleReportWeb />} />
         <Route path="*" element={<PageNotFound />} />

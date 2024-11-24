@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import VideoCallComponent from "../../components/VideoCall/video-sdk/VideoCallComponent";
-import { PencilLine, Code } from "lucide-react";
+import { PencilLine, Code, FileCheck2, X } from "lucide-react";
 import SampleReportWeb from "../../components/ReportGenerator/SampleReportWeb";
-import { FileCheck2, X } from "lucide-react";
 import StreamVideoCall from "../../components/VideoCall/Stream";
 
 const InterviewInterface = ({ room }) => {
+  const location = useLocation();
   const [ReportGenertorOpen, setReportGenertorOpen] = useState(false);
   const [toggle, setToggle] = useState(true);
+
+  // Check if 'hr' is in the URL
+  const isHrView = location.pathname.includes('hr');
 
   const handleOpenWhiteBoard = () => {
     setToggle(false);
@@ -58,6 +62,7 @@ const InterviewInterface = ({ room }) => {
           </div>
         </div>
       </div>
+      
       {/* Video Call Section for Small Screens (first) */}
       <div className="bg-[#1e1e1e] flex justify-center items-center p-6 md:h-full h-screen  overflow-y-auto row-span-1  md:row-auto md:col-span-1 md:order-none order-1">
         <div className="h-full w-full max-h-full max-w-full rounded-lg overflow-auto shadow-md flex items-center justify-center p-4 bg-[#2a2a2a]">
@@ -65,14 +70,20 @@ const InterviewInterface = ({ room }) => {
           {/* <StreamVideoCall/> */}
         </div>
       </div>
-      {/* <div
-        onClick={handleOpenReportGenerator}
-        className={`fixed cursor-pointer text-white rounded-lg top-5 z-50 p-3 right-5 ${
-          ReportGenertorOpen ? "bg-red-500" : "bg-blue-500"
-        }`}
-      >
-        {ReportGenertorOpen ? <X /> : <FileCheck2 />}
-      </div> */}
+
+      {/* Show Report Generator Button only if 'hr' is in the URL */}
+      {isHrView && (
+        <div
+          onClick={handleOpenReportGenerator}
+          className={`fixed cursor-pointer text-white rounded-lg top-5 z-50 p-3 right-5 ${
+            ReportGenertorOpen ? "bg-red-500" : "bg-blue-500"
+          }`}
+        >
+          {ReportGenertorOpen ? <X /> : <FileCheck2 />}
+        </div>
+      )}
+      
+      {/* Render the Report Generator if it's open */}
       {ReportGenertorOpen && (
         <div className="w-screen bg-black bg-opacity-65 fixed z-40 overflow-auto">
           <div className="max-w-4xl">

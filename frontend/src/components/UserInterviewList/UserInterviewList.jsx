@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 import { getInterviewsByEmail } from '../../api/Interview/interview.api';
 import { Calendar, User, ChevronRight } from 'lucide-react';
 
@@ -7,6 +8,7 @@ export function UserInterviewList() {
   const [activeTab, setActiveTab] = useState('Upcoming');
   const [interviews, setInterviews] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate(); // useNavigate hook for navigation
 
   useEffect(() => {
     const fetchInterviews = async () => {
@@ -31,6 +33,10 @@ export function UserInterviewList() {
   const filteredInterviews = interviews
     ? interviews.filter((interview) => interview.status === activeTab)
     : [];
+
+  const handleGoToInterview = (interviewID) => {
+    navigate(`/user/interview/room/?interviewID=${interviewID}`);
+  };
 
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto">
@@ -75,9 +81,17 @@ export function UserInterviewList() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 mt-4 sm:mt-0 w-full sm:w-auto">
-                <button className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
+                {interview.status === 'Ongoing' && (
+                  <button
+                    onClick={() => handleGoToInterview(interview._id)}
+                    className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium"
+                  >
+                    Go to Interview
+                  </button>
+                )}
+                {/* <button className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
                   View Resume
-                </button>
+                </button> */}
                 <button className="flex items-center gap-1 text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
                   {interview.status}
                   <ChevronRight className="w-4 h-4" />

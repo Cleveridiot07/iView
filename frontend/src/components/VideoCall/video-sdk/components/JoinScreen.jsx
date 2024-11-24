@@ -6,7 +6,7 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
   const location = useLocation();
   const [meetingId, setMeetingId] = useState(null);
   const [interviewID, setInterviewID] = useState(null);
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   // Get the interview ID and meeting ID from the URL parameters if available
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
       if (interviewID) {
         const interviewData = await getInterviewById(interviewID.trim());
         setMeetingId(interviewData.meetingId);
-        // console.log(interviewData.meetingId);
+        setLoading(false); // Stop loading when data is fetched
       }
     };
 
@@ -35,7 +35,9 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
   }, [interviewID]);
 
   const onClick = async () => {
-    await getMeetingAndToken(meetingId);
+    if (meetingId) {
+      await getMeetingAndToken(meetingId);
+    }
   };
 
   return (
@@ -47,7 +49,13 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
       </div>
 
       <div className="space-y-4">
-        {meetingId ? (
+        {loading ? (
+          <div className="text-center space-y-4">
+            <h2 className="text-xl text-gray-700 font-semibold">
+              Please wait while the interview details are being loaded...
+            </h2>
+          </div>
+        ) : meetingId ? (
           <div className="text-center space-y-4">
             <p className="text-lg text-gray-700 font-medium">Meeting ID:</p>
             <p className="text-xl font-bold text-gray-400 bg-gray-100 p-3 rounded-md">
@@ -57,7 +65,7 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
         ) : (
           <div className="text-center space-y-4">
             <h2 className="text-xl text-gray-700 font-semibold">
-              This interview has not started yet.
+              This interview has not started yet. Please wait while the meeting is getting set up.
             </h2>
           </div>
         )}
@@ -75,16 +83,17 @@ export default function JoinScreen({ getMeetingAndToken, userType = "user" }) {
 
         <button
           onClick={onClick}
+          disabled={userType === "interviewee" && !meetingId}
           className={`w-full py-2 mt-4 rounded-sm text-white ${
             meetingId
               ? "bg-green-500 hover:bg-green-600"
-              : "bg-green-400 hover:bg-green-500"
+              : "bg-gray-400 cursor-not-allowed"
           }`}
         >
           {userType === "interviewee"
             ? meetingId
               ? "Join Interview"
-              : "Join"
+              : "Waiting for Interview to Start"
             : meetingId
             ? "Start Interview"
             : "Start Interview"}

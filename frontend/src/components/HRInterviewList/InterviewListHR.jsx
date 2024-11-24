@@ -85,9 +85,9 @@ export default function InterviewListHR() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 mt-4 sm:mt-0 w-full sm:w-auto">
-                <button className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
+                {/* <button className="text-[#2B579A] hover:text-[#1E3F7D] text-sm font-medium">
                   View Resume
-                </button>
+                </button> */}
                 {interview.status === 'Completed' ? (
                   <button
                     onClick={() => handleDownloadReport(interview._id)}
