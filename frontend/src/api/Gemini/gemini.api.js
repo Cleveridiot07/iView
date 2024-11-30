@@ -58,8 +58,8 @@ export const fetchGeminiResponse = async (jobRole, companyName, experienceLevel)
 
     // Make the API call with the API key as a parameter
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAON3KRXthAXYOn917dF5rfNCjJdfom7Gs`, // API endpoint with API key as 'id' parameter
-      bodyContent, // Data to send
+      `${API_URL}?key=${API_KEY}`, // API endpoint with API key as 'id' parameter
+      bodyContent, // JavaScript object data to be serialized by axios
       {
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export const fetchGeminiResponse = async (jobRole, companyName, experienceLevel)
     );
 
     // Return the response from the API
-    return response.data.message || 'Response successfully retrieved from Gemini';
+    return response.data.candidates[0].content.parts[0].text;
   } catch (error) {
     // Log error message and throw a specific message
     console.error('Gemini API:', error.response?.data?.message || error.message);

@@ -1,46 +1,47 @@
-const { Server } = require('socket.io');
+const socketIO = require('socket.io');
 
-const users = {}; // To store user socket IDs
+const io = new socketIO.Server({
+  cors: {
+    origin: 'http://localhost:5173', // Replace with your frontend's URL
+    methods: ['GET', 'POST'],
+  },
+});
 
-module.exports = (server) => {
-    const io = new Server(server, {
-        cors: {
-            origin: "*",
-            methods: ["GET", "POST"]
-        }
-    });
+io.on('connection', (socket) => {
+  // Get the interviewID from the client's query parameters
+  const { interviewID } = socket.handshake.query;
 
-    io.on('connection', (socket) => {
-        console.log('a user connected:', socket.id);
+  // Join the socket to a room based on the interviewID
+  socket.join(interviewID);
 
-        // Store the user's socket ID with their username
-        socket.on('register', (username) => {
-            users[username] = socket.id;
-            console.log(`User registered: ${username} with socket ID: ${socket.id}`);
-        });
+  console.log(`${socket.id} connected to interview ${interviewID}`);
 
-        // Send a private message to a specific user
-        socket.on('private_message', ({ recipient, message }) => {
-            const recipientSocketId = users[recipient];
-            if (recipientSocketId) {
-                io.to(recipientSocketId).emit('private_message', {
-                    sender: socket.id,
-                    message: message
-                });
-            } else {
-                console.log(`User ${recipient} not found.`);
-            }
-        });
+  // Handle drawing events
+  socket.on('draw', (data) => {
+    console.log('Draw event received:', data);
+    // Broadcast the draw event only to other clients in the same room
+    socket.to(interviewID).emit('draw', data);
+  });
 
-        socket.on('disconnect', () => {
-            console.log('user disconnected:', socket.id);
-            // Remove user from the users object
-            for (let username in users) {
-                if (users[username] === socket.id) {
-                    delete users[username];
-                    break;
-                }
-            }
-        });
-    });
+  socket.on('down', (data) => {
+    console.log('Down event received:', data);
+    // Broadcast the down event only to other clients in the same room
+    socket.to(interviewID).emit('down', data);
+  });
+
+  // Handle chat messages
+  socket.on('send_message', (message) => {
+    console.log('Message received:', message);
+    // Broadcast the message only to other clients in the same room
+    socket.to(interviewID).emit('receive_message', message);
+  });
+
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} disconnected from interview ${interviewID}`);
+  });
+});
+
+module.exports = {
+  server: io,
 };

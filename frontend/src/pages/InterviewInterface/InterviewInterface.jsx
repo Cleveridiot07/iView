@@ -5,6 +5,8 @@ import VideoCallComponent from "../../components/VideoCall/video-sdk/VideoCallCo
 import { PencilLine, Code, FileCheck2, X } from "lucide-react";
 import SampleReportWeb from "../../components/ReportGenerator/SampleReportWeb";
 import StreamVideoCall from "../../components/VideoCall/Stream";
+import WhiteboardContainer from "../../components/Whiteboard/WhiteboardContainer";
+import ChatFloatButton from "../../components/ChatFloatButton/ChatFloatButton";
 
 const InterviewInterface = ({ room }) => {
   const location = useLocation();
@@ -55,9 +57,7 @@ const InterviewInterface = ({ room }) => {
             {toggle ? (
               <CodeEditor />
             ) : (
-              <div className="h-screen w-full bg-[#2a2a2a] flex items-center justify-center">
-                WhiteBoard
-              </div>
+                <WhiteboardContainer/>
             )}
           </div>
         </div>
@@ -91,6 +91,7 @@ const InterviewInterface = ({ room }) => {
           </div>
         </div>
       )}
+      <ChatFloatButton/>
     </div>
   );
 };
