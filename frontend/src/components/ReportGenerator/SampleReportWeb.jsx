@@ -1,36 +1,69 @@
 import React, { useEffect, useState } from "react";
-import CustomBasicSkiils from "./components/CustomBasicSkills";
+import CustomBasicSkills from "./components/CustomBasicSkills";
 import CustomProfileSection from "./components/CustomProfileSection";
 import CustomQuestions from "./components/CustomQuestions";
 import CustomFeedBack from "./components/CustomFeedBack";
 import CustomFooter from "./components/CustomFooter";
 import { fetchGeminiResponse } from "../../api/Gemini/gemini.api";
+import GeminiLoader from "../GeminiLoader/GeminiLoader";
+import extractJsonFromText from "../../utils/geminiTextParser"
+
 
 const SampleReportWeb = () => {
+  const [loading, setLoading] = useState(true);
+  const [skills, setSkills] = useState([]);
+  const [questionList, setQuestionList] = useState([]);
+
   useEffect(() => {
-    const fetchGemini = async()=>{
+    const fetchGemini = async () => {
       try {
-        const data= fetchGeminiResponse("SDE", "Google", "Fresher");
-        console.log(data);
+        const data = await fetchGeminiResponse("SDE", "Google", "Fresher");
+        // console.log("Raw API Data:", data);
+
+        const parsedData = extractJsonFromText(data);
+        // console.log("Parsed Data: ",parsedData);
+
+        const questionsArray = parsedData[0] || [];
+        const skillsArray = parsedData[1] || [];
+
+        if(questionsArray.length > 0) console.log("Questions: ",questionsArray);
+        if(skillsArray.length > 0) console.log("skills ",skillsArray);
+  
+        // if (Array.isArray(parsedData) && parsedData.length >= 2) {
+        //   const questionsArray = parsedData[0] || [];
+        //   const skillsArray = parsedData[1] || [];
+  
+        //   // const extractedSkills = skillsArray.map((skill) => ({
+        //   //   id: skill.id,
+        //   //   name: skill.name,
+        //   //   rating: skill.rating,
+        //   //   icon: skill.icon,
+        //   // }));
+  
+        //   // const extractedQuestions = questionsArray.map((question) => ({
+        //   //   id: question.id,
+        //   //   number: question.number,
+        //   //   text: question.text,
+        //   //   rating: question.rating,
+        //   //   remark: question.remark,
+        //   //   icon: question.icon,
+        //   // }));
+  
+        //   // setSkills(extractedSkills);
+        //   // setQuestionList(extractedQuestions);
+        // } else {
+        //   console.error("Unexpected data format:");
+        // }
+  
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
-    }
+    };
+  
     fetchGemini();
-  }, []);
-
-  const initialSkills = [
-    { id: "1", name: "Basic Technical Knowledge", rating: 8, icon: "Code" },
-    { id: "2", name: "Problem-Solving Skills", rating: 7, icon: "Puzzle" },
-    { id: "3", name: "Technical Learning Potential", rating: 9, icon: "Brain" },
-    {
-      id: "4",
-      name: "Collaboration and Communication",
-      rating: 8,
-      icon: "Users",
-    },
-  ];
-
+  }, [skills,questionList]);
+  
   const userData = {
     name: "Henry Beljiman",
     interviewDate: "2023-05-15",
@@ -38,33 +71,6 @@ const SampleReportWeb = () => {
     company: "Tech Corp",
     description: "Passionate about web development and new technologies.",
   };
-
-  const questionList = [
-    {
-      id: "1",
-      number: 1,
-      text: "Explain RESTful API architecture",
-      rating: 8,
-      remark: "Good understanding of REST principles",
-      icon: "Globe",
-    },
-    {
-      id: "2",
-      number: 2,
-      text: "Describe the difference between SQL and NoSQL databases",
-      rating: 7,
-      remark: "Solid grasp on database types",
-      icon: "Database",
-    },
-    {
-      id: "3",
-      number: 3,
-      text: "What are the benefits of using containerization?",
-      rating: 9,
-      remark: "Excellent knowledge of Docker and containers",
-      icon: "Cloud",
-    },
-  ];
 
   const sectionData = {
     strengths: [
@@ -92,18 +98,19 @@ const SampleReportWeb = () => {
     },
   ]);
 
-  const [skills, setSkills] = useState(initialSkills);
   const [isEditing, setIsEditing] = useState(true);
 
   const handleSaveSkills = (updatedSkills) => {
     setSkills(updatedSkills);
   };
 
+  if (loading) return <GeminiLoader />;
+
   return (
     <div className="max-h-screen overflow-auto">
       <CustomProfileSection Editing={isEditing} userData={userData} />
 
-      <CustomBasicSkiils
+      <CustomBasicSkills
         skillsList={skills}
         isEditing={isEditing}
         onSaveSkills={handleSaveSkills}
